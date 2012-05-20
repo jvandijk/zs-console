@@ -53,7 +53,7 @@ return array(
 
             // Setup for the view layer.
 
-            // Using the PhpRenderer, which just handles html produced by php 
+            // Using the PhpRenderer, which just handles html produced by php
             // scripts
             'Zend\View\Renderer\PhpRenderer' => array(
                 'parameters' => array(

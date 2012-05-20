@@ -1,0 +1,52 @@
+<?php
+$this->inlineScript()->appendFile($this->basePath() . '/js/jquery.min.js')
+                     ->appendFile($this->basePath() . '/js/bootstrap-tab.js');
+
+$this->inlineScript()->captureStart();
+?>
+$('#eventTabs a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+});
+<?php
+$this->inlineScript()->captureEnd();
+?>
+<div class="row-fluid">
+<div class="span2">
+    <div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">Actions</li>
+        <li class="active"><a href="<?php echo $this->url('ZsConsole-issues', array('serverId' => $server)); ?>">Issues</a></li>
+    </ul>
+    </div>
+</div>
+<div class="span10">
+
+<div class="tabbable">
+    <ul class="nav nav-pills" id="eventTabs">
+        <li class="active"><a data-toggle="tab" href="#eventInfo">Info</a></li>
+        <li><a data-toggle="tab" href="#eventServer">Server</a></li>
+        <li><a data-toggle="tab" href="#eventBacktrace">Backtrace</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="eventInfo" class="tab-pane active">
+        <dl>
+            <dt>ID</dt>
+            <dd><?php echo $issue->getId(); ?></dd>
+            <dt>Date</dt>
+            <dd><?php echo $issue->getDate(); ?></dd>
+            <dt>Rule</dt>
+            <dd><?php echo $issue->getRule(); ?></dd>
+            <dt>URL</dt>
+            <dd><?php echo $issue->getOrigin(); ?></dd>
+            <dt>Event</dt>
+            <dd><?php echo $event->getDescription(); ?></dd>
+        </dl>
+        </div>
+        <div id="eventServer" class="tab-pane"><pre><?php echo $event->getServerParams()->toString(); ?></pre></div>
+        <div id="eventBacktrace" class="tab-pane"><pre><?php echo $event->getBacktrace()->toString(); ?></pre></div>
+    </div>
+</div>
+
+</div>
+</div>

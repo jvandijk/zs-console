@@ -1,3 +1,5 @@
+deployment.properties
+deployment.xml
 nbproject
 ._*
 .~lock.*
