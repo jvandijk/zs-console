@@ -18,10 +18,10 @@ following structure:
 &lt;?php
 $servers = array(
     'local' => array(
-        'name' => '<Your name definition>',
-        'host' => '<hostname or ip:port>', // no protocol
-        'user' => '<zend server api name>',
-        'apikey' => '<zend server api key>',
+        'name' => '&lt;Your name definition&gt;',
+        'host' => '&lt;hostname or ip:port&gt;', // no protocol
+        'user' => '&lt;zend server api name&gt;',
+        'apikey' => '&lt;zend server api key&gt;',
         'cluster' => true, // optional key
     ),
 );
