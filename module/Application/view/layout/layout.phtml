@@ -23,7 +23,7 @@ echo $this->doctype();
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <?php echo $this->headTitle('ZF2 Skeleton Application') ?>
+    <?php echo $this->headTitle('Zend Server Web API') ?>
 
     <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
@@ -46,10 +46,11 @@ echo $this->doctype();
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="<?php echo $this->url('home') ?>">Skeleton Application</a>
+          <a class="brand" href="<?php echo $this->url('home') ?>">Zend Server Web API</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="<?php echo $this->url('home') ?>">Home</a></li>
+              <li class="active"><a href="/zs/servers">Servers</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
