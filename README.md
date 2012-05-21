@@ -14,6 +14,7 @@ Configuration
 Create a <name>.local.config.php file in the autoload folder. Include the
 following structure:
 
+<pre><code>
 <?php
 $servers = array(
     'local' => array(
@@ -36,3 +37,4 @@ return array(
         ),
     ),
 );
+</code></pre>
