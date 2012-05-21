@@ -13,6 +13,7 @@ use Zend\Http\Client,
 class ZendServer
 {
     const BASE_API_URI = '/ZendServer/Api/';
+    const BASE_API_URI_ZSCM = '/ZendServerManager/Api/';
 
     protected $client;
 
@@ -134,13 +135,15 @@ class ZendServer
     {
         $timestamp = time();
 
+        $base = (isset($server['cluster'])) ? self::BASE_API_URI_ZSCM : self::BASE_API_URI;
+
         $sig = $this->generateRequestSignature(
-                $this->servers[$server]['host'], self::BASE_API_URI . $path,
+                $this->servers[$server]['host'], $base . $path,
                 $timestamp, 'Zend\Http\Client', $this->servers[$server]['user'],
                 $this->servers[$server]['apikey']);
 
         $this->getHttpClient()
-             ->setUri('http://'.$this->servers[$server]['host'].self::BASE_API_URI . $path)
+             ->setUri('http://'.$this->servers[$server]['host'].$base . $path)
              ->setHeaders(array(
                  'X-Zend-Signature' => $sig,
                  'Accept' => 'application/vnd.zend.serverapi+xml;version=1.2',
