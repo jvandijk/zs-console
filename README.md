@@ -11,11 +11,11 @@ progress.
 
 Configuration
 ------------
-Create a <name>.local.config.php file in the autoload folder. Include the
+Create a &lt;name&gt;.local.config.php file in the autoload folder. Include the
 following structure:
 
 <pre><code>
-<?php
+&lt;?php
 $servers = array(
     'local' => array(
         'name' => '<Your name definition>',
