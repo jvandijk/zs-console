@@ -17,8 +17,8 @@ return array(
             'Zend\Mvc\Router\RouteStack' => array(
                 'parameters' => array(
                     'routes' => array(
-                        'ZsConsole-servers' => array(
-                            'type'    => 'Zend\Mvc\Router\Http\Literal',
+                        'zs-console' => array(
+                            'type'    => 'Literal',
                             'options' => array(
                                 'route' => '/zs/servers',
                                 'defaults' => array(
@@ -26,50 +26,49 @@ return array(
                                     'action'     => 'index',
                                 ),
                             ),
-                        ),
-                        'ZsConsole-server' => array(
-                            'type'    => 'Zend\Mvc\Router\Http\Segment',
-                            'options' => array(
-                                'route' => '/zs/servers/[:serverId]',
-                                'defaults' => array(
-                                    'controller' => 'ZsConsole\Controller\ServerController',
-                                    'action'     => 'server',
+                            'may_terminate' => true,
+                            'child_routes' => array(
+                                'server' => array(
+                                    'type'    => 'Segment',
+                                    'options' => array(
+                                        'route' => '/[:serverId]',
+                                        'defaults' => array(
+                                            'action'     => 'server',
+                                        ),
+                                    ),
                                 ),
-                            ),
-                        ),
-                        'ZsConsole-issues' => array(
-                            'type'    => 'Zend\Mvc\Router\Http\Segment',
-                            'options' => array(
-                                'route' => '/zs/servers/[:serverId]/issues',
-                                'defaults' => array(
-                                    'controller' => 'ZsConsole\Controller\ServerController',
-                                    'action'     => 'issues',
+                                'issues' => array(
+                                    'type'    => 'Segment',
+                                    'options' => array(
+                                        'route' => '/[:serverId]/issues',
+                                        'defaults' => array(
+                                            'action'     => 'issues',
+                                        ),
+                                    ),
                                 ),
-                            ),
-                        ),
-                        'ZsConsole-issue' => array(
-                            'type' => 'Zend\Mvc\Router\Http\Segment',
-                            'options' => array(
-                                'route' => '/zs/servers/[:serverId]/issues/[:issueId]',
-                                'constraints' => array(
-                                    'issueId' => '[0-9]+',
+                                'issue' => array(
+                                    'type' => 'Segment',
+                                    'options' => array(
+                                        'route' => '/[:serverId]/issues/[:issueId]',
+                                        'constraints' => array(
+                                            'issueId' => '[0-9]+',
+                                        ),
+                                        'defaults' => array(
+                                            'action' => 'issue',
+                                        ),
+                                    ),
                                 ),
-                                'defaults' => array(
-                                    'controller' => 'ZsConsole\Controller\ServerController',
-                                    'action' => 'issue',
-                                ),
-                            ),
-                        ),
-                        'ZsConsole-close-issue' => array(
-                            'type' => 'Zend\Mvc\Router\Http\Segment',
-                            'options' => array(
-                                'route' => '/zs/servers/[:serverId]/issues/[:issueId]/close',
-                                'constraints' => array(
-                                    'issueId' => '[0-9]+',
-                                ),
-                                'defaults' => array(
-                                    'controller' => 'ZsConsole\Controller\ServerController',
-                                    'action' => 'closeIssue',
+                                'close-issue' => array(
+                                    'type' => 'Segment',
+                                    'options' => array(
+                                        'route' => '/[:serverId]/issues/[:issueId]/close',
+                                        'constraints' => array(
+                                            'issueId' => '[0-9]+',
+                                        ),
+                                        'defaults' => array(
+                                            'action' => 'closeIssue',
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),

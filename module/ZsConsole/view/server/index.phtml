@@ -2,7 +2,7 @@
 <?php
 foreach($servers as $key => $info) {
     echo '<div class="span4"><div class="well"><h2>'.$info['name'].'</h2>',
-         '<a class="btn btn-info btn-large" href="'.$this->url('ZsConsole-server', array('serverId'=>$key)).'">'.$info['host'].'</a></div></div>';
+         '<a class="btn btn-info btn-large" href="'.$this->url('zs-console/server', array('serverId'=>$key)).'">'.$info['host'].'</a></div></div>';
 }
 ?>
 </div>
