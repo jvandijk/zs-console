@@ -8,4 +8,6 @@ nbproject
 .idea
 .project
 .settings
-
+composer.phar
+composer.lock
+/vendor/
