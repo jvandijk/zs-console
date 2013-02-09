@@ -2,6 +2,12 @@
 
 return array(
     'zsconsole' => array(
+        'http' => array(
+            'adapter' => 'Zend\Http\Client\Adapter\Curl',
+        //  'proxy_host' => '',
+        //  'proxy_port' => '',
+        //  you can add other parameters in your local config
+        ),
         // configure servers as follows in your local config file
         'servers' => array(
         //  '<unique-url-name>' => array(

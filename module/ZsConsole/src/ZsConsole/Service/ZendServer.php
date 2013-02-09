@@ -2,10 +2,9 @@
 
 namespace ZsConsole\Service;
 
-use Zend\Http\Client,
-    Zend\Http\Client\Adapter\Proxy,
-    Zend\Http\Request,
+use Zend\Http\Request,
     Zend\Http\Response,
+    ZsConsole\Model\System\Entity as SystemEntity,
     ZsConsole\Model\Issue\ResultSet as IssueResultSet,
     ZsConsole\Model\Issue\Entity as IssueEntity,
     ZsConsole\Model\Event\Entity as EventEntity;
@@ -42,7 +41,10 @@ class ZendServer
         $response = $this->prepareHttpClient($server, $action, array())
                          ->send();
 
-        return $this->parseResponse($response);
+        $result = new SystemEntity();
+        $result->setXml($this->parseResponse($response));
+
+        return $result;
     }
 
     public function listIssues($server, $id = null, $offset = 0, $limit = 10, $sort = 'date', $order = 'desc')
@@ -110,23 +112,10 @@ class ZendServer
      */
     public function getHttpClient()
     {
-        if (null === $this->client) {
-            $adapter = new Proxy();
-            $config = array(
-                'proxy_host' => '192.168.56.1',
-                'proxy_port' => 8888);
-            $this->client = new Client();
-            $this->client->setAdapter($adapter);
-            //$this->client->setConfig($config);
-
-            $this->client->getRequest()
-                         ->getHeaders();
-        }
-
         return $this->client;
     }
 
-    public function setHttpClient(Client $client)
+    public function setHttpClient(\Zend\Http\Client $client)
     {
         $this->client = $client;
     }
@@ -178,7 +167,7 @@ class ZendServer
                         $body->response->status,
                         $body->response->message));
             } else {
-                throw new RuntimeException('Unknown error during request to Postage server');
+                throw new RuntimeException('Unknown error during request to server');
             }
         }
 

@@ -2,7 +2,9 @@
 
 namespace ZsConsole;
 
-use ZsConsole\Service\ZendServer;
+use ZsConsole\Service\ZendServer,
+    Zend\Http\Client as HttpClient,
+    Zend\Http\Client\Adapter\Proxy as HttpProxy;
 
 class Module
 {
@@ -26,10 +28,20 @@ class Module
     {
         return array(
             'factories' => array(
+                'ZsConsole\HttpClient' => function ($services) {
+                    $config = $services->get('config');
+                    $config = $config['zsconsole']['http'];
+
+                    $client = new HttpClient();
+                    $client->setOptions($config);
+                    return $client;
+                },
                 'ZsConsole\ZendServer' => function($services) {
                     $config = $services->get('config');
                     $config = $config['zsconsole']['servers'];
-                    return new Service\ZendServer($config);
+                    $zs = new Service\ZendServer($config);
+                    $zs->setHttpClient($services->get('ZsConsole\HttpClient'));
+                    return $zs;
                 },
             )
         );
