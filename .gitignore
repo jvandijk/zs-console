@@ -10,4 +10,5 @@ nbproject
 .settings
 composer.phar
 composer.lock
+config/autoload/*.local.php
 /vendor/
