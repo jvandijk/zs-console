@@ -2,11 +2,11 @@
 
 namespace ZsConsole\Controller;
 
-use Zend\Mvc\Controller\ActionController,
+use Zend\Mvc\Controller\AbstractActionController,
     Zend\View\Model\ViewModel,
-    ZsConsole\Service\ZendServer;
+    ZsConsole\Service\ZendServer as ZendServer;
 
-class ServerController extends ActionController
+class ServerController extends AbstractActionController
 {
     /**
      *
@@ -14,7 +14,7 @@ class ServerController extends ActionController
      */
     protected $zs = null;
 
-    public function __construct(ZendServer $zs)
+    public function setZendServerService(ZendServer $zs)
     {
         $this->zs = $zs;
     }
@@ -42,10 +42,10 @@ class ServerController extends ActionController
 
         // retrieve param from request
         $request = $this->getEvent()->getRequest();
-        $offset = $request->query()->get('offset', 0);
-        $limit = $request->query()->get('limit', 10);
-        $sort = $request->query()->get('sort', 'date');
-        $order = $request->query()->get('order', 'desc');
+        $offset = $request->getQuery()->get('offset', 0);
+        $limit = $request->getQuery()->get('limit', 10);
+        $sort = $request->getQuery()->get('sort', 'date');
+        $order = $request->getQuery()->get('order', 'desc');
 
         $issues = $this->zs->listIssues($serverId, null, $offset, $limit, $sort, $order);
 
@@ -78,6 +78,6 @@ class ServerController extends ActionController
 
         $this->zs->changeIssueStatus($serverId, $issueId);
 
-        $this->redirect()->toUrl($this->getEvent()->getRequest()->server()->get('HTTP_REFERER'));
+        $this->redirect()->toUrl($this->getEvent()->getRequest()->getServer()->get('HTTP_REFERER'));
     }
 }

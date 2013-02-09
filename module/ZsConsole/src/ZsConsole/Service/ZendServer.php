@@ -120,7 +120,7 @@ class ZendServer
             //$this->client->setConfig($config);
 
             $this->client->getRequest()
-                         ->headers();
+                         ->getHeaders();
         }
 
         return $this->client;

@@ -2,16 +2,18 @@
 
 namespace ZsConsole;
 
-use Zend\Module\Consumer\AutoloaderProvider;
+use ZsConsole\Service\ZendServer;
 
-class Module implements AutoloaderProvider
+class Module
 {
+    public function getConfig()
+    {
+        return include __DIR__ . '/config/module.config.php';
+    }
+
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
@@ -20,8 +22,33 @@ class Module implements AutoloaderProvider
         );
     }
 
-    public function getConfig()
+    public function getServiceConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return array(
+            'factories' => array(
+                'ZsConsole\ZendServer' => function($services) {
+                    $config = $services->get('config');
+                    $config = $config['zsconsole']['servers'];
+                    return new Service\ZendServer($config);
+                },
+            )
+        );
+    }
+
+    public function getControllerConfig()
+    {
+        return array(
+            'factories' => array(
+                'ZsConsole\Controller\Server' => function($controllers) {
+                    $services     = $controllers->getServiceLocator();
+                    $zendServer   = $services->get('ZsConsole\ZendServer');
+
+                    $controller = new Controller\ServerController();
+                    $controller->setZendServerService($zendServer);
+
+                    return $controller;
+                },
+            ),
+        );
     }
 }
