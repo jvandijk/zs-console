@@ -8,8 +8,47 @@
     </div>
     </div>
     <div class="span10">
-    <?php
-    var_dump($info);
-    ?>
+        <table class="table-striped">
+        <tr>
+            <td>Status</td>
+            <td><?php echo $info->getStatus(); ?></td>
+        </tr>
+        <tr>
+            <td>Version</td>
+            <td><?php echo $info->getVersion(); ?></td>
+        </tr>
+        <tr>
+            <td>Edition</td>
+            <td><?php echo $info->getEdition(); ?></td>
+        </tr>
+        <tr>
+            <td>PHP Version</td>
+            <td><?php echo $info->getPhpVersion(); ?></td>
+        </tr>
+        <tr>
+            <td>Operating system</td>
+            <td><?php echo $info->getOperatingSystem(); ?></td>
+        </tr>
+        <tr>
+            <td>Api Support</td>
+            <td><ul>
+            <?php
+                foreach ($info->getApiVersions() as $version) {
+                    echo '<li>'.$version.'</li>';
+                }
+            ?>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Server License</td>
+            <td><ul>
+                <li><?php echo $info->getServerLicense()->getOrderNumber(); ?></li>
+                <li><?php echo $info->getServerLicense()->getValidUntil(); ?></li>
+                <li><?php echo $info->getServerLicense()->getStatus(); ?></li>
+                <li><?php echo $info->getServerLicense()->getServerLimit(); ?></li>
+            </ul></td>
+        </tr>
+        </table>
     </div>
 </div>

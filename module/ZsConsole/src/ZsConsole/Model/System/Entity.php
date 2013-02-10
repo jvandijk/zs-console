@@ -2,7 +2,8 @@
 
 namespace ZsConsole\Model\System;
 
-use \DOMDocument, \DOMXPath, \DOMNode;
+use \DOMDocument, \DOMXPath, \DOMNode,
+    ZsConsole\Model\System\LicenseInfo\Entity as LicenseInfo;
 
 class Entity
 {
@@ -79,7 +80,7 @@ class Entity
     public function getApiVersions()
     {
         if (null === $this->apiVersions) {
-            $this->apiVersions = explode(', ', $this->xpath->evaluate('string(./zs:supportedApiVersions[1])', $this->object));
+            $this->apiVersions = explode(',', $this->xpath->evaluate('string(./zs:supportedApiVersions[1])', $this->object));
         }
         return $this->apiVersions;
     }
@@ -100,12 +101,12 @@ class Entity
         return $this->operatingSystem;
     }
 
-    public function getEventGroupId()
+    public function getServerLicense()
     {
-        $eventNodeList = $this->object->ownerDocument->getElementsByTagName('eventsGroupId');
-        if ($eventNodeList->length > 0) {
-            return $eventNodeList->item(0)->nodeValue;
+        if (null === $this->serverLicense) {
+            $obj = $this->object->ownerDocument->getElementsByTagName('serverLicenseInfo')->item(0);
+            $this->serverLicense = new LicenseInfo($obj);
         }
-        return null;
+        return $this->serverLicense;
     }
 }

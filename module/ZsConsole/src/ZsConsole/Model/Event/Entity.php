@@ -71,7 +71,7 @@ class Entity
     public function getCodetrace()
     {
         if (null === $this->codetrace) {
-            $this->codetrace = $this->xpath->evaluate('.zs:codeTracing[1]', $this->object)->length;
+            $this->codetrace = $this->xpath->evaluate('./zs:codeTracing[1]', $this->object)->length;
         }
         return $this->codetrace;
     }
